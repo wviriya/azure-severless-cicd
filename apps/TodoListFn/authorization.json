@@ -1,0 +1,18 @@
+{
+     "routes": [
+       {
+         "http_methods": [ "GET", "POST", "PUT", "DELETE" ],
+         "path_prefix": "/api/todos",
+         "policies": {
+           "unauthenticated_action": "RedirectToLoginPage"
+         }
+       },
+       {
+          "http_methods": [ "HEAD" ],
+          "path_prefix": "/api/todos",
+          "policies": {
+            "unauthenticated_action": "AllowAnonymous"
+          }
+        }
+     ]
+}

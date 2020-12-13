@@ -1,0 +1,17 @@
+{
+  "hosting": [
+    {
+      "app": {
+        "project": "todo-app",
+        "target": "build",
+        "configuration": "production",
+        "path": "dist/todo-app"
+      },
+      "azureHosting": {
+        "subscription": "c1a37f4e-c839-41b3-a627-5ea61b973cd1",
+        "resourceGroupName": "demo-rg",
+        "account": "azninjaspa"
+      }
+    }
+  ]
+}

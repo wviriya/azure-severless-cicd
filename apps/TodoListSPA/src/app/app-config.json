@@ -1,0 +1,22 @@
+{
+  "auth": {
+    "clientId": "95b016bb-3eac-47d2-8df1-17ae455540f3",
+    "authority": "https://login.microsoftonline.com/microsoft.onmicrosoft.com",
+    "validateAuthority": true,
+    "redirectUri": "https://azninjaspa.z8.web.core.windows.net",
+    "postLogoutRedirectUri": "https://azninjaspa.z8.web.core.windows.net",
+    "navigateToLoginRequestUrl": true
+  },
+    "cache": {
+        "cacheLocation": "localStorage"
+    },
+    "scopes": {
+        "loginRequest": ["openid", "profile"]
+    },
+    "resources": {
+      "todoListApi": {
+        "resourceUri": "https://azninja.azure-api.net/todos/todos",
+        "resourceScope": "https://azninja-todofn.azurewebsites.net/user_impersonation"
+      }
+    }     
+}
