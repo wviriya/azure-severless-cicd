@@ -10,7 +10,7 @@ on:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Resource Group Name'
         # Default value if no value is explicitly provided
-        default: 'arm-demo-gha'
+        default: 'serverless-rg '
         # Input has to be provided for the workflow to run
         required: true
       location:
@@ -23,13 +23,6 @@ on:
       webappname:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Name of Web App'
-        # Input has to be provided for the workflow to run
-        required: true
-      type:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Deployment Type (webapp, serverless, vm)'
-        # Default value if no value is explicitly provided
-        default: 'webapp'
         # Input has to be provided for the workflow to run
         required: true
 
@@ -54,23 +47,17 @@ jobs:
           # Name of the azure key vault
           keyvault: 'azninja-kv'
           # Name of the secret to be fetched
-          secrets: 'testconnstr, prodconnstr'
+          secrets: 'testconnstr, prodconnstr, msi'
           
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
           tokenPrefix: '__'
           tokenSuffix: '__'
-          files: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.parameters.json
+          files: ${{ github.workspace }}/arm_templates/deployment.parameters.json
         env: 
           webappname: ${{ github.event.inputs.webappname }}
-          sku: 'S1'
-          devconnstr: ${{ steps.kvsecrets.outputs.testconnstr }}
-          testconnstr: ${{ steps.kvsecrets.outputs.testconnstr }}
-          prodconnstr: ${{ steps.kvsecrets.outputs.prodconnstr }}
-          subscription: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          resourceGroup: 'common-rg'
-          msi: ${{ secrets.MSI }}
+          msi: ${{ steps.kvsecrets.outputs.msi }}
 
       # Deployment of template    
       - name: Deploy Azure Resource Manager (ARM) Template
@@ -85,3 +72,12 @@ jobs:
           resourceGroupName: ${{ github.event.inputs.resourceGroup }}
           template: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.json  # Set this to the location of your template file
           parameters: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.parameters.json 
+
+      - name: Azure CLI Action
+        uses: Azure/cli@1.0.4
+        with:
+          # Specify the script here
+          inlineScript: |
+            chmod +x $GITHUB_WORKSPACE/scripts/appRegistration.sh
+            $GITHUB_WORKSPACE/scripts/appRegistration.sh
+          
