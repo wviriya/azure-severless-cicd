@@ -263,6 +263,10 @@
     "staticWebURL": {
       "type": "string",
       "value": "[reference('getStaticWebURL').outputs.text]"
+    },
+    "storageaccountName": {
+      "type": "string",
+      "value": "[variables('storageAccountName')]"
     }
 
   }
