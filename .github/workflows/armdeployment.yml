@@ -61,6 +61,7 @@ jobs:
 
       # Deployment of template    
       - name: Deploy Azure Resource Manager (ARM) Template
+        id: ARMDeployment
         uses: Azure/arm-deploy@v1.0.1
         with:
           # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription
@@ -71,7 +72,19 @@ jobs:
           # Provide the name of a resource group, only required for resource Group deployments.
           resourceGroupName: ${{ github.event.inputs.resourceGroup }}
           template: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.json  # Set this to the location of your template file
-          parameters: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.parameters.json 
+          parameters: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.parameters.json
+
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.0
+        with:
+          tokenPrefix: '__'
+          tokenSuffix: '__'
+          files: ${{ github.workspace }}/scripts/appRegistration.sh
+        env: 
+          client: ${{ steps.ARMDeployment.outputs.storageaccountName }}
+          api: ${{ steps.ARMDeployment.outputs.appName }}
+          resourceGroup: ${{ github.event.inputs.resourceGroup }}
+          staticWebURL: ${{ steps.ARMDeployment.outputs.staticWebURL }}
 
       - name: Azure CLI Action
         uses: Azure/cli@1.0.4
@@ -80,4 +93,5 @@ jobs:
           inlineScript: |
             chmod +x $GITHUB_WORKSPACE/scripts/appRegistration.sh
             $GITHUB_WORKSPACE/scripts/appRegistration.sh
+            
           
