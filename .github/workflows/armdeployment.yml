@@ -45,9 +45,9 @@ jobs:
         uses: Azure/get-keyvault-secrets@v1
         with:
           # Name of the azure key vault
-          keyvault: 'azninja-kv'
+          keyvault: 'wviriya-kv'
           # Name of the secret to be fetched
-          secrets: 'testconnstr, prodconnstr, msi'
+          secrets: 'msi'
           
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
