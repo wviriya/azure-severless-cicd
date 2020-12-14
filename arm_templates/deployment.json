@@ -214,30 +214,6 @@
       }
     },
     {
-      "type": "Microsoft.Resources/deploymentScripts",
-      "apiVersion": "2019-10-01-preview",
-      "name": "configureAuthen",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[variables('storageAccountName')]"
-      ],
-      "kind": "AzureCLI",
-      "identity": {
-        "type": "UserAssigned",
-        "userAssignedIdentities": {
-          "[parameters('identity')]": {}
-        }
-      },
-      "properties": {
-        "AzCliVersion": "2.0.80",
-        "timeout": "PT30M",
-        "arguments": "[concat(variables('storageAccountName'),' ',variables('functionAppName'),' ',reference('getStaticWebURL').outputs.text,' ',subscription().subscriptionId,' ',resourceGroup().name)]",
-        "primaryScriptUri": "https://raw.githubusercontent.com/wviriya/Zero-to-Hero-with-ARM-and-IaC/master/scripts/app_registration.sh",
-        "cleanupPreference": "Always",
-        "retentionInterval": "P1D"
-      }
-    },
-    {
       "type": "Microsoft.Insights/components",
       "apiVersion": "2020-02-02-preview",
       "name": "[variables('appInsightsName')]",
