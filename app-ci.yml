@@ -10,10 +10,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    rm -rf node_modules dist
-    npm uninstall -g @angular/cli
-    npm cache clean
-    npm install -g @angular/cli
+    sudo npm install
   displayName: 'npm install'
 
 - script: |
