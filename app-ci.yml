@@ -27,13 +27,6 @@ steps:
     version: '3.1.x'
     packageType: runtime
     
-- task: DotNetCoreCLI@2
-  displayName: Restore
-  inputs:
-    command: restore
-    projects: '$(System.DefaultWorkingDirectory)/apps/TodoListFn/*.csproj'
-    feedsToUse: config
-    nugetConfigPath: NuGet.config    # Relative to root of the repository
 
 - task: DotNetCoreCLI@2
   displayName: Build
