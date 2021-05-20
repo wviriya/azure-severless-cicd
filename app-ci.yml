@@ -12,6 +12,7 @@ steps:
 - script: |
     cd $(System.DefaultWorkingDirectory)/apps/TodoListSPA
     npm install
+    npm install -g @angular/cli
     ng build -c=production --output-path='$(Build.ArtifactStagingDirectory)/frontend'
   displayName: 'npm install and build'
 
