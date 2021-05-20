@@ -10,11 +10,17 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    cd $(workingDirectory)/apps/TodoListSPA
+    cd $(System.DefaultWorkingDirectory)/apps/TodoListSPA
     npm install -g @angular/cli
     npm install
-    ng build -c=production
+    ng build -c=production --output-path $(Build.ArtifactStagingDirectory)/frontend
   displayName: 'npm install and build'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish frontend app'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/frontend'
+    ArtifactName: 'frontend'
 
 - task: UseDotNet@2
   inputs:
@@ -25,7 +31,7 @@ steps:
   displayName: Restore
   inputs:
     command: restore
-    projects: '$(workingDirectory)/apps/TodoListFn/*.csproj'
+    projects: '$(System.DefaultWorkingDirectory)/apps/TodoListFn/*.csproj'
     feedsToUse: config
     nugetConfigPath: NuGet.config    # Relative to root of the repository
 
@@ -33,11 +39,11 @@ steps:
   displayName: Build
   inputs:
     command: build
-    projects: '$(workingDirectory)/apps/TodoListFn/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    projects: '$(System.DefaultWorkingDirectory)/apps/TodoListFn/*.csproj'
+    arguments: '--output $(Build.ArtifactStagingDirectory)/function --configuration Release'
     
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish function app'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'apps'
-    publishLocation: 'Container'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/function'
+    ArtifactName: 'function'
