@@ -10,9 +10,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install --save-dev @angular-devkit/build-angular
+    rm -rf node_modules dist
+    npm uninstall -g @angular/cli
+    npm cache clean
     npm install -g @angular/cli
-    npm install
   displayName: 'npm install'
 
 - script: |
