@@ -13,7 +13,6 @@ steps:
     npm install -g @angular/cli
     npm install --save-dev @angular-devkit/build-angular
     npm install
-    npm audit fix
   displayName: 'npm install'
 
 - script: |
