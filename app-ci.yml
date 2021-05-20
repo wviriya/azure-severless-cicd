@@ -15,6 +15,8 @@ steps:
   displayName: 'npm install'
 
 - script: |
+    echo $(System.DefaultWorkingDirectory)
+    ls $(System.DefaultWorkingDirectory)
     cd $(System.DefaultWorkingDirectory)/apps/TodoListSPA
     ng build -c=production --output-path='$(Build.ArtifactStagingDirectory)/frontend'
   displayName: 'ng build'
