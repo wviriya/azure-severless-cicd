@@ -44,5 +44,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish templates'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/arm_templates'
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/arm_templates'
     ArtifactName: 'templates'
