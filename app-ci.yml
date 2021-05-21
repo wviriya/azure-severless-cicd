@@ -40,3 +40,9 @@ steps:
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/function'
     ArtifactName: 'function'
+  
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish templates'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/arm_templates'
+    ArtifactName: 'templates'
